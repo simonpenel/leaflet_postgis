@@ -1,0 +1,149 @@
+
+
+https://www.postgresql.org/download/linux/ubuntu/
+
+sudo apt install curl ca-certificates
+
+sudo -u postgres psql
+sudo apt update
+sudo apt install postgresql postgresql-contrib postgis
+
+Pour créer un utilisateur dans PostgreSQL, tu peux utiliser la commande SQL `CREATE USER` (ou `CREATE ROLE`).
+
+### 1. Se connecter à PostgreSQL
+
+Dans un terminal :
+
+```bash
+psql -U postgres
+```
+
+Ou avec sudo sur Linux :
+
+```bash
+sudo -u postgres psql
+```
+
+---
+
+### 2. Créer un utilisateur
+
+```sql
+CREATE USER mon_utilisateur WITH PASSWORD 'mot_de_passe';
+```
+
+Exemple :
+
+```sql
+CREATE USER app_user WITH PASSWORD 'secret123';
+
+```
+CREATE EXTENSION postgis;
+
+---
+
+### 3. Donner des permissions
+
+Créer une base :
+
+```sql
+CREATE DATABASE ma_base;
+```
+
+Donner l’accès à cette base :
+
+```sql
+GRANT ALL PRIVILEGES ON DATABASE ma_base TO app_user;
+```
+
+---
+
+### 4. Vérifier les utilisateurs
+
+Dans `psql` :
+
+```sql
+\du
+```
+
+---
+
+### Variante avec `CREATE ROLE`
+
+PostgreSQL considère les utilisateurs comme des rôles avec login :
+
+```sql
+CREATE ROLE app_user LOGIN PASSWORD 'secret123';
+```
+
+---
+
+### Exemple complet
+
+```sql
+CREATE USER monapp WITH PASSWORD 'motdepassefort';
+CREATE DATABASE monapp_db;
+GRANT ALL PRIVILEGES ON DATABASE monapp_db TO monapp;
+```
+
+
+
+---
+
+Documentation officielle :
+[PostgreSQL Documentation – CREATE USER](https://www.postgresql.org/docs/current/sql-createuser.html?utm_source=chatgpt.com)
+
+
+https://public.dalibo.com/exports/formation/manuels/modules/b/b.handout.html
+
+git clone --branch REL_18_0 https://git.postgresql.org/git/postgresql.git
+sudo apt-get update
+sudo apt-get install flex
+sudo apt-get install bison
+
+cd postgresql/
+./configure --prefix=/usr/local/pgsql 
+make -j8
+cd contrib
+make -j8
+make check
+cd ..
+make check
+sudo make install
+cd contrib
+sudo make install
+/usr/local/pgsql/bin/pg_config  --configure
+
+sudo -u postgres psql
+
+
+
+dans sql je cree le role penel avec les doits de creation de base
+CREATE ROLE penel LOGIN PASSWORD 'penel' CREATEDB;
+
+
+je cree la base test_postgis en tant qu'utilisateur penel
+createdb  -U penel -W test_postgis
+
+Je me connecte sur la base test_postgis en tant qu utilstauer postgresqlpour avoir les droits
+sudo -u postgres psql test_postgis
+je donne l'extebions postgis
+CREATE EXTENSION postgis;
+
+le cree un table
+psql  test_postgis < create_table.sql 
+
+create_table.sql :
+CREATE TABLE lieux (
+    id serial PRIMARY KEY,
+    nom text,
+    geom geometry(Point, 4326)
+);
+INSERT INTO lieux (nom, geom)
+VALUES (
+    'Parc',
+    ST_SetSRID(ST_MakePoint(4.87, 45.76), 4326)
+);
+
+autre possibilité
+psql -U penel  test_postgis < create_table2.sql 
