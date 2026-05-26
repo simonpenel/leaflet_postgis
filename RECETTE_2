@@ -1,0 +1,51 @@
+
+# INSTALLATION POSGRESQL
+# ======================
+sudo apt install postgresql
+
+# INSTALLATION POSTGIS
+# ====================
+
+sudo apt update
+sudo apt install postgresql postgresql-contrib postgis
+
+Se loguer comme postgres
+sudo -i -u postgres 
+
+Se connecter
+psql 
+
+
+dans sql je cree le role penel avec les doits de creation de base
+CREATE ROLE simon LOGIN PASSWORD 'simon' CREATEDB;
+
+je sors de sal (controle d) et u bash postgres (exit)
+
+je cree la base test_postgis en tant qu'utilisateur simon a partir du bash
+createdb  -U simon -W base_chenes
+
+Je me connecte sur la base test_postgis en tant qu utilstauer postgresqlpour avoir les droits
+sudo -u postgres psql base_chenes
+
+je donne l'extebions postgis
+CREATE EXTENSION postgis;
+
+je teste la connexion
+
+psql  base_chenes
+
+le cree un table
+psql  base_chenes < create_table.sql 
+
+create_table.sql :
+CREATE TABLE lieux (
+    id serial PRIMARY KEY,
+    nom text,
+    geom geometry(Point, 4326)
+);
+INSERT INTO lieux (nom, geom)
+VALUES (
+    'Parc',
+    ST_SetSRID(ST_MakePoint(4.87, 45.76), 4326)
+);
+
