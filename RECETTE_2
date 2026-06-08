@@ -3,11 +3,12 @@
 # ======================
 sudo apt install postgresql
 
-# INSTALLATION POSTGIS
+# INSTALLATION POSTGIS (attention a la putain de version)'
 # ====================
 
 sudo apt update
 sudo apt install postgresql postgresql-contrib postgis
+sudo apt install postgis postgresql-18-postgis-3
 
 Se loguer comme postgres
 sudo -i -u postgres 
@@ -17,12 +18,15 @@ psql
 
 
 dans sql je cree le role penel avec les doits de creation de base
+ATTENTION utiliser l'utilsiateir linux
 CREATE ROLE simon LOGIN PASSWORD 'simon' CREATEDB;
 
-je sors de sal (controle d) et u bash postgres (exit)
+CREATE ROLE penel LOGIN PASSWORD 'penel' CREATEDB;
+je sors de sql (controle d) et u bash postgres (exit)
 
 je cree la base test_postgis en tant qu'utilisateur simon a partir du bash
 createdb  -U simon -W base_chenes
+createdb  -U penel -W base_chenes
 
 Je me connecte sur la base test_postgis en tant qu utilstauer postgresqlpour avoir les droits
 sudo -u postgres psql base_chenes
