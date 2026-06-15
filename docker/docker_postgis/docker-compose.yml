@@ -1,0 +1,13 @@
+services:
+  postgis:
+    container_name: simon-postgis
+    image: postgis/postgis:18-3.6
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=chenes
+      - POSTGRES_USER=simon
+      - POSTGRES_PASSWORD=simon
+    ports:
+      - "127.0.0.1:5433:5433"
+    volumes:
+      - ./postgis_data:/var/lib/postgresql
