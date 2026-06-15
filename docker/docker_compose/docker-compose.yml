@@ -1,13 +1,22 @@
+version: "3.8"
+
 services:
-  postgis:
-    container_name: simon-postgis
-    image: postgis/postgis:18-3.6
-    restart: unless-stopped
-    environment:
-      - POSTGRES_DB=chenes
-      - POSTGRES_USER=simon
-      - POSTGRES_PASSWORD=simon
-    ports:
-      - "127.0.0.1:5433:5433"
+  node:
+    build: ./../docker-node
     volumes:
-      - ./postgis_data:/var/lib/postgresql
+      - ./../docker-data/contents/:/usr/src/app/public/contents/
+    ports:
+      - "49161:8080"
+    networks:
+      - dockleafnet
+
+  redis:
+    build: ./../docker-postgis
+    volumes:
+      - ./../docker-data/:/home/pgis/data/
+    networks:
+      - dockleafnet
+
+networks:
+  dockleafnet:
+    driver: bridge
