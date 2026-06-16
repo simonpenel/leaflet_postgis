@@ -37,6 +37,8 @@ services:
       - "3838:3838"
     depends_on:
       - node
+    networks:
+      - appnet
     restart: unless-stopped
 
 networks:
