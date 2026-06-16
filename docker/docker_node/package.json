@@ -1,0 +1,14 @@
+{
+  "name": "postgis_node",
+  "version": "1.0.0",
+  "description": "Node.js server",
+  "author": "Simon Penel <simon.penel@univ-lyon1.fr>",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "pg": "^8.21.0"
+  }
+}

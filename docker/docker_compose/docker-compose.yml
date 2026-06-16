@@ -2,21 +2,37 @@ version: "3.8"
 
 services:
   node:
-    build: ./../docker-node
-    volumes:
-      - ./../docker-data/contents/:/usr/src/app/public/contents/
+    build: ./../docker_node
+    # volumes:
+    #   - ./../data/uploads:/usr/src/app/uploads
+    #   - ./../data/config:/usr/src/app/config
     ports:
-      - "49161:8080"
+      - "8080:8080"
+    environment:
+      DATABASE_URL: postgres://simon:simon@postgis:5432/chenes
+    depends_on:
+      - postgis
     networks:
-      - dockleafnet
+      - appnet
 
-  redis:
-    build: ./../docker-postgis
+  postgis:
+    container_name: simon-postgis
+    image: postgis/postgis:16-3.4
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: simon
+      POSTGRES_PASSWORD: simon
+      POSTGRES_DB: chenes
     volumes:
-      - ./../docker-data/:/home/pgis/data/
+      - postgis_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
     networks:
-      - dockleafnet
+      - appnet
 
 networks:
-  dockleafnet:
+  appnet:
     driver: bridge
+
+volumes:
+  postgis_data:
