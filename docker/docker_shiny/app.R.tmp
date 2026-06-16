@@ -1,0 +1,59 @@
+library(shiny)
+library(jsonlite)
+library(leaflet)
+
+server <- function(input, output, session) {
+
+url <- "http://localhost:8080/api/arbres"
+geojson <- jsonlite::fromJSON(url,
+  simplifyVector = TRUE,
+  simplifyDataFrame = TRUE)
+print("DEBUG GEOJSON =")
+gdf <- geojson$features
+print(geojson$features)
+print(gdf)
+print("LATT")
+print(gdf$geometry$coordinates)
+new_df <- data.frame(
+  arbre = gdf$propertie$nom,
+  site = gdf$propertie$nom_site,
+  latitude  =sapply(gdf$geometry$coordinates, `[`, 1),
+  longitude  =sapply(gdf$geometry$coordinates, `[`, 2),
+  year = gdf$propertie$annee
+)
+
+print("DEBUG MASTING =")
+#print(masting)
+testdf <- data.frame(name = c("Site","Arbre","Methode", "Longitude","Latitude","Altitude", "Year") )
+print("type")
+print(geojson$type)
+print("features")
+print(geojson$features)
+print(geojson$features$type)
+print(geojson$features$geometry$type)
+print(geojson$features$geometry$coordinates)
+print(colnames(geojson))
+conv_mast <- function(site) {
+  print("debug ")
+  print(site)
+  site
+}
+
+test_geo <- lapply(
+    geojson$features$geometry$coordinates,
+    conv_mast
+  )
+print(test_geo)  
+
+  output$map <- renderLeaflet({
+    d <- arbres()
+
+    leaflet(d) %>%
+      addTiles() %>%
+      addMarkers(
+        lng = ~lon,
+        lat = ~lat,
+        popup = ~nom
+      )
+  })
+}

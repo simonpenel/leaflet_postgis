@@ -30,6 +30,15 @@ services:
     networks:
       - appnet
 
+  shiny:
+    build: ./../docker_shiny
+    container_name: shiny-arbres
+    ports:
+      - "3838:3838"
+    depends_on:
+      - node
+    restart: unless-stopped
+
 networks:
   appnet:
     driver: bridge
