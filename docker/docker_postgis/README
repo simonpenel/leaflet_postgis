@@ -1,3 +1,6 @@
  sudo docker compose up
 
-sudo docker exec -ti simon-postgis psql -U simon chenes < create_table_arbres.sql 
+
+sudo docker exec -i simon-postgis psql -U simon -d chenes < create_table_arbres.sql 
+
+sudo docker exec -i simon-postgis psql -U simon -d chenes < fill_table_arbres_suite.sql
