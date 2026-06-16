@@ -6,3 +6,9 @@ sudo docker exec -i simon-postgis psql -U simon -d chenes < create_table_arbres.
 sudo docker exec -i simon-postgis psql -U simon -d chenes < fill_table_arbres_suite.sql
 
  sudo docker compose exec shiny bash
+
+ cat /var/log/shiny-server/*.log
+ 
+ docker compose down
+docker compose build --no-cache shiny
+docker compose up -d
