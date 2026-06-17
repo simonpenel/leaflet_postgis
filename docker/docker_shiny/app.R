@@ -18,7 +18,7 @@ new_df <- data.frame(
   longitude  =sapply(gdf$geometry$coordinates, `[`, 2),
   year = gdf$propertie$annee
 )
-print(new_df)
+message(new_df)
 
 ui <- fluidPage(
   useShinyjs(),
