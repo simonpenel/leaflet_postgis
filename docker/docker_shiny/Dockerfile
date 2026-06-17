@@ -15,7 +15,7 @@ RUN apt-get update && apt-get install -y \
 #RUN R -e "install.packages(c('shiny','leaflet','jsonlite','httr'), repos='https://cloud.r-project.org')"
 
  RUN R -e "install.packages('pak', repos='https://cloud.r-project.org')"
- RUN R -e "pak::pkg_install(c('shiny', 'leaflet','jsonlite','httr'))"
+ RUN R -e "pak::pkg_install(c('shiny', 'leaflet','leaflet.extras','jsonlite','httr','shinyjs'))"
 # Copie de l'application
 COPY . /srv/shiny-server/
 
