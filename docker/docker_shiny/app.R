@@ -2,21 +2,23 @@ library(shiny)
 library(leaflet)
 library(leaflet.extras)
 library(shinyjs)
+library(jsonlite)
 
-# url <- "http://node:8080/api/arbres"
-# geojson <- jsonlite::fromJSON(url,
-#   simplifyVector = TRUE,
-#   simplifyDataFrame = TRUE)
-# print("DEBUG GEOJSON =")
-# gdf <- geojson$features
-# new_df <- data.frame(
-#   arbre = gdf$propertie$nom,
-#   site = gdf$propertie$nom_site,
-#   latitude  =sapply(gdf$geometry$coordinates, `[`, 1),
-#   longitude  =sapply(gdf$geometry$coordinates, `[`, 2),
-#   year = gdf$propertie$annee
-# )
-# print(new_df)
+message("DEBUG GEOJSON 1")
+url <-"http://node:8080/api/arbres"
+geojson <- jsonlite::fromJSON(url,
+  simplifyVector = TRUE,
+  simplifyDataFrame = TRUE)
+message("DEBUG GEOJSON 2")
+gdf <- geojson$features
+new_df <- data.frame(
+  arbre = gdf$propertie$nom,
+  site = gdf$propertie$nom_site,
+  latitude  =sapply(gdf$geometry$coordinates, `[`, 1),
+  longitude  =sapply(gdf$geometry$coordinates, `[`, 2),
+  year = gdf$propertie$annee
+)
+print(new_df)
 
 ui <- fluidPage(
   useShinyjs(),
