@@ -59,7 +59,12 @@ server <- function(input, output, session) {
         popup = "Hello from Paris!",
         clusterOptions = markerClusterOptions()
       ) %>%
-      addGeoJSONv2(input$geojson_data,clusterOptions = markerClusterOptions()) 
+      addGeoJSONv2(input$geojson_data,
+      labelProperty = "nom",
+      popupProperty = "nom_site",
+      clusterOptions = markerClusterOptions(),
+      popupOptions = popupOptions(),
+      labelOptions = labelOptions()) 
       # clusterOptions = markerClusterOptions()
   })
 
