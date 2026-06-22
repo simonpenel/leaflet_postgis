@@ -2,10 +2,8 @@ version: "3.8"
 
 services:
   node:
+    container_name: arbres-node
     build: ./../docker_node
-    # volumes:
-    #   - ./../data/uploads:/usr/src/app/uploads
-    #   - ./../data/config:/usr/src/app/config
     ports:
       - "8080:8080"
     environment:
@@ -16,7 +14,7 @@ services:
       - appnet
 
   postgis:
-    container_name: simon-postgis
+    container_name: arbres-postgis
     image: postgis/postgis:16-3.4
     restart: unless-stopped
     environment:
@@ -32,7 +30,7 @@ services:
 
   shiny:
     build: ./../docker_shiny
-    container_name: shiny-arbres
+    container_name: arbres-shiny
     ports:
       - "3838:3838"
     depends_on:
